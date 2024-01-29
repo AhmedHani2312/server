@@ -1,10 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import CORS module
 const userRoutes = require('./routes/user');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json()); // To parse JSON bodies
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Since Express 4.16.0, bodyParser has been re-added under the methods express.json() and express.urlencoded()
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+app.use(express.json()); // To parse JSON bodies
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
