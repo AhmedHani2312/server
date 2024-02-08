@@ -41,15 +41,20 @@ exports.submitPersonalityForm = (req, res) => {
                     } else {
                         console.log("Inserted data:", { meta_key, meta_value, results });
                         resolve(results);
+                        
                     }
                 });
             });
         })
     )
-    .then(() => {
-        res.send("Personality form submitted successfully");
-        console.log("All responses submitted successfully.");
-    })
+        .then(() => {
+            console.log("All responses submitted successfully.");
+            res.status(201).json({
+                message: "Personality form submitted successfully",
+                userId: user_id,
+                userEmail: email
+            });
+        })
     .catch(err => {
         console.error("Error submitting personality form:", err);
         res.status(500).send(err.message);
@@ -59,34 +64,41 @@ exports.submitPersonalityForm = (req, res) => {
 
 
 
+exports.submitFeaturesForm = (req, res) => {
+    const { email, user_id, responses } = req.body;
+    console.log("Email received on server:", email);
+  
+    Promise.all(
+      responses.map(({ meta_key, meta_value }) => {
+        return new Promise((resolve, reject) => {
+          const query = "INSERT INTO featuresform (email, user_id, meta_key, meta_value) VALUES (?, ?, ?, ?)";
+          connection.query(query, [email, user_id, meta_key, meta_value], (err, results) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(results.insertId);
+            }
+          });
+        });
+      })
+    )
+    .then(resultIds => {
+      res.status(201).json({
+        message: "Features form submitted successfully",
+        insertedIds: resultIds
+      });
+    })
+    .catch(err => {
+      console.error("Error submitting features form:", err);
+      res.status(500).send(err.message);
+    });
+  };
 
 
-// exports.submitPersonalityForm = (req, res) => {
-//     const { userId, responses } = req.body;
-
-//     Promise.all(responses.map((response, index) => {
-//         return new Promise((resolve, reject) => {
-//             const query = `INSERT INTO personalityform (user_id, meta_key, meta_xvalue) VALUES (?, ?, ?)`;
-//             connection.query(query, [userId, index + 1, response], (err, results) => {
-//                 if (err) {
-//                     reject(err);
-//                 } else {
-//                     resolve(results);
-//                 }
-//             });
-//         });
-//     }))
-//     .then(() => {
-//         res.send('Personality form submitted successfully');
-//     })
-//     .catch(err => {
-//         res.status(500).send(err.message);
-//     });
-// };
 
 
 
-
+  
 
 
 
@@ -113,5 +125,3 @@ exports.getUserById = (req, res) => {
         res.send(results[0]);
     });
 }
-
-
