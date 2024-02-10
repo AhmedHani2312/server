@@ -7,6 +7,13 @@ router.post('/submitPersonalityForm', UserController.submitPersonalityForm); // 
 
 router.post('/submitFeaturesForm', UserController.submitFeaturesForm);
 
+// Add this new route in user.js under routes directory
+
+router.post('/submitCountryChoice', UserController.submitCountryChoice);
+
+
+
+
 router.get('/getAllUsers', UserController.getAllUsers);
 router.get("/:id", UserController.getUserById);
 

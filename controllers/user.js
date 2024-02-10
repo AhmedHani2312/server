@@ -98,6 +98,40 @@ exports.submitFeaturesForm = (req, res) => {
 
 
 
+
+
+
+
+
+  // Add this new controller function in user.js under controllers directory
+
+exports.submitCountryChoice = (req, res) => {
+    const { user_id, question_id, uni_country } = req.body;
+
+    const query = "INSERT INTO user_uni_country (user_id, question_id, uni_country) VALUES (?, ?, ?)";
+    connection.query(query, [user_id, question_id, uni_country], (err, results) => {
+        if (err) {
+            console.error("Error inserting country choice:", err);
+            return res.status(500).send(err.message);
+        }
+        console.log("Country choice submitted successfully:", results);
+        res.status(201).json({
+            message: "Country choice submitted successfully",
+            insertedId: results.insertId
+        });
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
   
 
 
