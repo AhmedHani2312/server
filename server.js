@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import CORS module
 const userRoutes = require('./routes/user');
+const universityRoutes = require('./routes/university');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 // User Routes
 app.use('/user', userRoutes);
+app.use('/university', universityRoutes);
 
 // Start the server
 app.listen(3000, () => {

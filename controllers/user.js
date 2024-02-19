@@ -1,3 +1,6 @@
+//user.js controllers
+
+
 const connection = require('../connection'); // Adjust as per your directory structure
 
 exports.signup = (req, res) => {
@@ -93,16 +96,6 @@ exports.submitFeaturesForm = (req, res) => {
       res.status(500).send(err.message);
     });
   };
-
-
-
-
-
-
-
-
-
-
   // Add this new controller function in user.js under controllers directory
 
 exports.submitCountryChoice = (req, res) => {
@@ -121,20 +114,6 @@ exports.submitCountryChoice = (req, res) => {
         });
     });
 };
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
 
 exports.getAllUsers = (req, res) => {
     const query = 'SELECT * FROM user';
