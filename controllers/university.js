@@ -47,6 +47,8 @@ exports.getAllUniversities = (req, res) => {
 // }
 
 
+
+
 exports.getRandomUniversities = (req, res) => {
     const country = req.query.country; // Assuming the country code is passed as a query parameter
     let query;
@@ -66,4 +68,36 @@ exports.getRandomUniversities = (req, res) => {
         const universityNames = results.map(uni => uni.name);
         res.json(universityNames);
     });
+};
+
+
+
+
+
+
+
+
+
+exports.submitRatings = (req, res) => {
+    const { ratings, userId } = req.body;
+
+    const queries = ratings.map(rating => {
+        return new Promise((resolve, reject) => {
+            const { universityId, ratingValue } = rating;
+            const query = 'INSERT INTO rating (user_id, university_id, rating, timestamp) VALUES (?, ?, ?, NOW())';
+            connection.query(query, [userId, universityId, ratingValue], (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            });
+        });
+    });
+
+    Promise.all(queries)
+        .then(() => {
+            res.status(200).json({ message: 'Ratings submitted successfully' });
+        })
+        .catch(error => {
+            console.error('Error submitting ratings:', error);
+            res.status(500).json({ error: 'Error submitting ratings' });
+        });
 };

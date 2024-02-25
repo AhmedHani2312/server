@@ -7,4 +7,7 @@ router.get('/randomUniversities', UniversityController.getRandomUniversities);
 router.get('/allUniversities', UniversityController.getAllUniversities);
 
 
+router.post('/submitRatings', UniversityController.submitRatings);
+
+
 module.exports = router;

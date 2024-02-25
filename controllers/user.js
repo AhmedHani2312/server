@@ -115,6 +115,19 @@ exports.submitCountryChoice = (req, res) => {
     });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 exports.getAllUsers = (req, res) => {
     const query = 'SELECT * FROM user';
     connection.query(query, (err, results) => {
