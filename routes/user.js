@@ -13,9 +13,6 @@ router.post('/submitFeaturesForm', UserController.submitFeaturesForm);
 
 router.post('/submitCountryChoice', UserController.submitCountryChoice);
 
-
-
-
 router.get('/getAllUsers', UserController.getAllUsers);
 router.get("/:id", UserController.getUserById);
 

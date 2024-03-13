@@ -29,25 +29,6 @@ exports.getAllUniversities = (req, res) => {
 }
 
 
-// exports.getRandomUniversities = (req, res) => {
-    
-//     console.log("Fetching random universities");
-//     const query = "SELECT name FROM university ORDER BY RAND() LIMIT 5";
-//     connection.query(query, (err, results) => {
-//         if (err) {
-//             console.error("Error fetching random universities:", err);
-//             return res.status(500).json({ error: err.message });
-//         }
-//         console.log("Results:", results);
-//         const universityNames = results.map(uni => uni.name);
-//         console.log("Random Universities: ", universityNames);
-//         res.json(universityNames);
-//     });
-
-// }
-
-
-
 
 exports.getRandomUniversities = (req, res) => {
     const country = req.query.country; // Assuming the country code is passed as a query parameter
@@ -69,34 +50,6 @@ exports.getRandomUniversities = (req, res) => {
     });
 };
 
-
-
-
-
-
-
-
-
-// exports.submitRatings = async (req, res) => {
-//     const { ratings, userId } = req.body; // Ensure this matches the frontend structure
-
-//     try {
-//         await Promise.all(ratings.map(rating => {
-//             return new Promise((resolve, reject) => {
-//                 const { universityId, ratingValue } = rating; // Ensure these match your database columns
-//                 const query = 'INSERT INTO rating (user_id, university_id, rating, timestamp) VALUES (?, ?, ?, NOW())';
-//                 connection.query(query, [userId, universityId, ratingValue], (err, result) => {
-//                     if (err) reject(err);
-//                     else resolve(result);
-//                 });
-//             });
-//         }));
-//         res.status(200).json({ message: 'Ratings submitted successfully.' });
-//     } catch (error) {
-//         console.error('Error submitting ratings:', error);
-//         res.status(500).json({ error: 'Error submitting ratings' });
-//     }
-// };
 
 
 
