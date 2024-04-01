@@ -154,14 +154,32 @@ exports.getUserById = (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
+exports.submitHowDidItGoForm = async (req, res) => {
+    const { email, user_id, responses } = req.body;
+  
+    try {
+      // You'll iterate over your responses object and insert them into the database
+      for (const [questionId, answer] of Object.entries(responses)) {
+        const query = "INSERT INTO howdiditgoform (email, user_id, meta_key, meta_value) VALUES (?, ?, ?, ?)";
+        await new Promise((resolve, reject) => {
+          connection.query(query, [email, user_id, questionId, answer], (err, results) => {
+            if (err) reject(err);
+            resolve(results);
+          });
+        });
+      }
+      // Once all inserts are done, send back a success response
+      res.status(201).json({
+        message: 'Survey responses submitted successfully',
+        userEmail: email,
+        userId: user_id
+      });
+    } catch (err) {
+      console.error('Error submitting survey responses:', err);
+      res.status(500).send(err.message);
+    }
+  };
+  
 
 
 

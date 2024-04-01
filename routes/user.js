@@ -8,6 +8,7 @@ router.post('/signup', UserController.signup);
 router.post('/submitPersonalityForm', UserController.submitPersonalityForm); // Added route for personality form submission
 
 router.post('/submitFeaturesForm', UserController.submitFeaturesForm);
+router.post('/submitHowDidItGoForm', UserController.submitHowDidItGoForm);
 
 // Add this new route in user.js under routes directory
 
